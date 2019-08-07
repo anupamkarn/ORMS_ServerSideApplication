@@ -1,0 +1,250 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ORMSITRONDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="ORMSITRONDbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AddressTables" EntityType="ORMSITRONDbModel.AddressTable" />
+    <EntitySet Name="CartTables" EntityType="ORMSITRONDbModel.CartTable" />
+    <EntitySet Name="CatagoryTables" EntityType="ORMSITRONDbModel.CatagoryTable" />
+    <EntitySet Name="CustomerTables" EntityType="ORMSITRONDbModel.CustomerTable" />
+    <EntitySet Name="OrderProductLineTables" EntityType="ORMSITRONDbModel.OrderProductLineTable" />
+    <EntitySet Name="OrderTables" EntityType="ORMSITRONDbModel.OrderTable" />
+    <EntitySet Name="ProductTables" EntityType="ORMSITRONDbModel.ProductTable" />
+    <EntitySet Name="UserTables" EntityType="ORMSITRONDbModel.UserTable" />
+    <AssociationSet Name="FK_A_AddressTable" Association="ORMSITRONDbModel.FK_A_AddressTable">
+      <End Role="CustomerTable" EntitySet="CustomerTables" />
+      <End Role="AddressTable" EntitySet="AddressTables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CartTable_ToCustomerTable" Association="ORMSITRONDbModel.FK_CartTable_ToCustomerTable">
+      <End Role="CustomerTable" EntitySet="CustomerTables" />
+      <End Role="CartTable" EntitySet="CartTables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CartTable_ToProductTable" Association="ORMSITRONDbModel.FK_CartTable_ToProductTable">
+      <End Role="ProductTable" EntitySet="ProductTables" />
+      <End Role="CartTable" EntitySet="CartTables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductTable_CatagoryTable" Association="ORMSITRONDbModel.FK_ProductTable_CatagoryTable">
+      <End Role="CatagoryTable" EntitySet="CatagoryTables" />
+      <End Role="ProductTable" EntitySet="ProductTables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerTable_UserTable" Association="ORMSITRONDbModel.FK_CustomerTable_UserTable">
+      <End Role="UserTable" EntitySet="UserTables" />
+      <End Role="CustomerTable" EntitySet="CustomerTables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderTable_CustomerTable" Association="ORMSITRONDbModel.FK_OrderTable_CustomerTable">
+      <End Role="CustomerTable" EntitySet="CustomerTables" />
+      <End Role="OrderTable" EntitySet="OrderTables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderProductLineTable_ProductTable" Association="ORMSITRONDbModel.FK_OrderProductLineTable_ProductTable">
+      <End Role="ProductTable" EntitySet="ProductTables" />
+      <End Role="OrderProductLineTable" EntitySet="OrderProductLineTables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderProductLineTable_ToOrderTable" Association="ORMSITRONDbModel.FK_OrderProductLineTable_ToOrderTable">
+      <End Role="OrderTable" EntitySet="OrderTables" />
+      <End Role="OrderProductLineTable" EntitySet="OrderProductLineTables" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="AddressTable">
+    <Key>
+      <PropertyRef Name="AddressID" />
+    </Key>
+    <Property Name="AddressID" Type="Int32" Nullable="false" />
+    <Property Name="LineOne" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LineTwo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="City" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="State" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Pincode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CustomerID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CustomerTable" Relationship="ORMSITRONDbModel.FK_A_AddressTable" FromRole="AddressTable" ToRole="CustomerTable" />
+  </EntityType>
+  <EntityType Name="CartTable">
+    <Key>
+      <PropertyRef Name="CartID" />
+    </Key>
+    <Property Name="DateOfItemAdded" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="ProductID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CustomerID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CartID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="CustomerTable" Relationship="ORMSITRONDbModel.FK_CartTable_ToCustomerTable" FromRole="CartTable" ToRole="CustomerTable" />
+    <NavigationProperty Name="ProductTable" Relationship="ORMSITRONDbModel.FK_CartTable_ToProductTable" FromRole="CartTable" ToRole="ProductTable" />
+  </EntityType>
+  <EntityType Name="CatagoryTable">
+    <Key>
+      <PropertyRef Name="CatagoryID" />
+    </Key>
+    <Property Name="CatagoryID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CatagoryName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="ProductTables" Relationship="ORMSITRONDbModel.FK_ProductTable_CatagoryTable" FromRole="CatagoryTable" ToRole="ProductTable" />
+  </EntityType>
+  <EntityType Name="CustomerTable">
+    <Key>
+      <PropertyRef Name="CustomerID" />
+    </Key>
+    <Property Name="CustomerID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="UserID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="EmailID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="MobileNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsEmailIDVerified" Type="Boolean" Nullable="false" />
+    <Property Name="IsMobileNoVerified" Type="Boolean" Nullable="false" />
+    <Property Name="EmailGenCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="MobileGenCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CustomerName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="AddressTables" Relationship="ORMSITRONDbModel.FK_A_AddressTable" FromRole="CustomerTable" ToRole="AddressTable" />
+    <NavigationProperty Name="CartTables" Relationship="ORMSITRONDbModel.FK_CartTable_ToCustomerTable" FromRole="CustomerTable" ToRole="CartTable" />
+    <NavigationProperty Name="UserTable" Relationship="ORMSITRONDbModel.FK_CustomerTable_UserTable" FromRole="CustomerTable" ToRole="UserTable" />
+    <NavigationProperty Name="OrderTables" Relationship="ORMSITRONDbModel.FK_OrderTable_CustomerTable" FromRole="CustomerTable" ToRole="OrderTable" />
+  </EntityType>
+  <EntityType Name="OrderProductLineTable">
+    <Key>
+      <PropertyRef Name="OrderProductLineID" />
+    </Key>
+    <Property Name="Quatity" Type="Int32" Nullable="false" />
+    <Property Name="Rate" Type="Int32" Nullable="false" />
+    <Property Name="GrossAmount" Type="Int32" Nullable="false" />
+    <Property Name="DiscountAmount" Type="Int32" Nullable="false" />
+    <Property Name="Disccount_" Type="Int32" Nullable="false" />
+    <Property Name="TaxAmount" Type="Int32" Nullable="false" />
+    <Property Name="Tax_" Type="Int32" Nullable="false" />
+    <Property Name="OrderID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ProductID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="OrderProductLineID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="ProductTable" Relationship="ORMSITRONDbModel.FK_OrderProductLineTable_ProductTable" FromRole="OrderProductLineTable" ToRole="ProductTable" />
+    <NavigationProperty Name="OrderTable" Relationship="ORMSITRONDbModel.FK_OrderProductLineTable_ToOrderTable" FromRole="OrderProductLineTable" ToRole="OrderTable" />
+  </EntityType>
+  <EntityType Name="OrderTable">
+    <Key>
+      <PropertyRef Name="OrderID" />
+    </Key>
+    <Property Name="OrderID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Status" Type="Boolean" Nullable="false" />
+    <Property Name="NetAmount" Type="Int32" Nullable="false" />
+    <Property Name="CustomerID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CustomerTable" Relationship="ORMSITRONDbModel.FK_OrderTable_CustomerTable" FromRole="OrderTable" ToRole="CustomerTable" />
+    <NavigationProperty Name="OrderProductLineTables" Relationship="ORMSITRONDbModel.FK_OrderProductLineTable_ToOrderTable" FromRole="OrderTable" ToRole="OrderProductLineTable" />
+  </EntityType>
+  <EntityType Name="ProductTable">
+    <Key>
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="ProductID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ProductName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Prize" Type="Int32" />
+    <Property Name="ProductQuantity" Type="Int32" />
+    <Property Name="Image" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="Tax" Type="Int32" />
+    <Property Name="Discount" Type="Int32" />
+    <Property Name="CatagoryID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CartTables" Relationship="ORMSITRONDbModel.FK_CartTable_ToProductTable" FromRole="ProductTable" ToRole="CartTable" />
+    <NavigationProperty Name="CatagoryTable" Relationship="ORMSITRONDbModel.FK_ProductTable_CatagoryTable" FromRole="ProductTable" ToRole="CatagoryTable" />
+    <NavigationProperty Name="OrderProductLineTables" Relationship="ORMSITRONDbModel.FK_OrderProductLineTable_ProductTable" FromRole="ProductTable" ToRole="OrderProductLineTable" />
+  </EntityType>
+  <EntityType Name="UserTable">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Role" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="UserID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CustomerTables" Relationship="ORMSITRONDbModel.FK_CustomerTable_UserTable" FromRole="UserTable" ToRole="CustomerTable" />
+  </EntityType>
+  <Association Name="FK_A_AddressTable">
+    <End Type="ORMSITRONDbModel.CustomerTable" Role="CustomerTable" Multiplicity="1" />
+    <End Type="ORMSITRONDbModel.AddressTable" Role="AddressTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerTable">
+        <PropertyRef Name="CustomerID" />
+      </Principal>
+      <Dependent Role="AddressTable">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CartTable_ToCustomerTable">
+    <End Type="ORMSITRONDbModel.CustomerTable" Role="CustomerTable" Multiplicity="1" />
+    <End Type="ORMSITRONDbModel.CartTable" Role="CartTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerTable">
+        <PropertyRef Name="CustomerID" />
+      </Principal>
+      <Dependent Role="CartTable">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CartTable_ToProductTable">
+    <End Type="ORMSITRONDbModel.ProductTable" Role="ProductTable" Multiplicity="1" />
+    <End Type="ORMSITRONDbModel.CartTable" Role="CartTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductTable">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="CartTable">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductTable_CatagoryTable">
+    <End Type="ORMSITRONDbModel.CatagoryTable" Role="CatagoryTable" Multiplicity="0..1" />
+    <End Type="ORMSITRONDbModel.ProductTable" Role="ProductTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CatagoryTable">
+        <PropertyRef Name="CatagoryID" />
+      </Principal>
+      <Dependent Role="ProductTable">
+        <PropertyRef Name="CatagoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerTable_UserTable">
+    <End Type="ORMSITRONDbModel.UserTable" Role="UserTable" Multiplicity="1" />
+    <End Type="ORMSITRONDbModel.CustomerTable" Role="CustomerTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserTable">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="CustomerTable">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderTable_CustomerTable">
+    <End Type="ORMSITRONDbModel.CustomerTable" Role="CustomerTable" Multiplicity="1" />
+    <End Type="ORMSITRONDbModel.OrderTable" Role="OrderTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerTable">
+        <PropertyRef Name="CustomerID" />
+      </Principal>
+      <Dependent Role="OrderTable">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderProductLineTable_ProductTable">
+    <End Type="ORMSITRONDbModel.ProductTable" Role="ProductTable" Multiplicity="1" />
+    <End Type="ORMSITRONDbModel.OrderProductLineTable" Role="OrderProductLineTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductTable">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="OrderProductLineTable">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderProductLineTable_ToOrderTable">
+    <End Type="ORMSITRONDbModel.OrderTable" Role="OrderTable" Multiplicity="1" />
+    <End Type="ORMSITRONDbModel.OrderProductLineTable" Role="OrderProductLineTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrderTable">
+        <PropertyRef Name="OrderID" />
+      </Principal>
+      <Dependent Role="OrderProductLineTable">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

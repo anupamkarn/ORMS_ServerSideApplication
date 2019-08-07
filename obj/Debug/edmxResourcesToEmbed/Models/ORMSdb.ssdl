@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AddressTable">
+    <Key>
+      <PropertyRef Name="AddressID" />
+    </Key>
+    <Property Name="AddressID" Type="int" Nullable="false" />
+    <Property Name="LineOne" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="LineTwo" Type="varchar" MaxLength="50" />
+    <Property Name="City" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="State" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Pincode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="CustomerID" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CartTable">
+    <Key>
+      <PropertyRef Name="CartID" />
+    </Key>
+    <Property Name="DateOfItemAdded" Type="datetime" Nullable="false" />
+    <Property Name="Quantity" Type="int" Nullable="false" />
+    <Property Name="ProductID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="CustomerID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="CartID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CatagoryTable">
+    <Key>
+      <PropertyRef Name="CatagoryID" />
+    </Key>
+    <Property Name="CatagoryID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="CatagoryName" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CustomerTable">
+    <Key>
+      <PropertyRef Name="CustomerID" />
+    </Key>
+    <Property Name="CustomerID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="UserID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="EmailID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="MobileNo" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Status" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="IsEmailIDVerified" Type="bit" Nullable="false" />
+    <Property Name="IsMobileNoVerified" Type="bit" Nullable="false" />
+    <Property Name="EmailGenCode" Type="varchar" MaxLength="50" />
+    <Property Name="MobileGenCode" Type="varchar" MaxLength="50" />
+    <Property Name="CustomerName" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrderProductLineTable">
+    <Key>
+      <PropertyRef Name="OrderProductLineID" />
+    </Key>
+    <Property Name="Quatity" Type="int" Nullable="false" />
+    <Property Name="Rate" Type="int" Nullable="false" />
+    <Property Name="GrossAmount" Type="int" Nullable="false" />
+    <Property Name="DiscountAmount" Type="int" Nullable="false" />
+    <Property Name="Disccount%" Type="int" Nullable="false" />
+    <Property Name="TaxAmount" Type="int" Nullable="false" />
+    <Property Name="Tax%" Type="int" Nullable="false" />
+    <Property Name="OrderID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ProductID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="OrderProductLineID" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrderTable">
+    <Key>
+      <PropertyRef Name="OrderID" />
+    </Key>
+    <Property Name="OrderID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="OrderDate" Type="datetime" Nullable="false" />
+    <Property Name="Status" Type="bit" Nullable="false" />
+    <Property Name="NetAmount" Type="int" Nullable="false" />
+    <Property Name="CustomerID" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProductTable">
+    <Key>
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="ProductID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ProductName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Prize" Type="int" />
+    <Property Name="ProductQuantity" Type="int" />
+    <Property Name="Image" Type="varchar" MaxLength="50" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="Tax" Type="int" />
+    <Property Name="Discount" Type="int" />
+    <Property Name="CatagoryID" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="UserTable">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Role" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Status" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="UserID" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_A_AddressTable">
+    <End Role="CustomerTable" Type="Self.CustomerTable" Multiplicity="1" />
+    <End Role="AddressTable" Type="Self.AddressTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerTable">
+        <PropertyRef Name="CustomerID" />
+      </Principal>
+      <Dependent Role="AddressTable">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CartTable_ToCustomerTable">
+    <End Role="CustomerTable" Type="Self.CustomerTable" Multiplicity="1" />
+    <End Role="CartTable" Type="Self.CartTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerTable">
+        <PropertyRef Name="CustomerID" />
+      </Principal>
+      <Dependent Role="CartTable">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CartTable_ToProductTable">
+    <End Role="ProductTable" Type="Self.ProductTable" Multiplicity="1" />
+    <End Role="CartTable" Type="Self.CartTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductTable">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="CartTable">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerTable_UserTable">
+    <End Role="UserTable" Type="Self.UserTable" Multiplicity="1" />
+    <End Role="CustomerTable" Type="Self.CustomerTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserTable">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="CustomerTable">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderProductLineTable_ProductTable">
+    <End Role="ProductTable" Type="Self.ProductTable" Multiplicity="1" />
+    <End Role="OrderProductLineTable" Type="Self.OrderProductLineTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductTable">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="OrderProductLineTable">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderProductLineTable_ToOrderTable">
+    <End Role="OrderTable" Type="Self.OrderTable" Multiplicity="1" />
+    <End Role="OrderProductLineTable" Type="Self.OrderProductLineTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrderTable">
+        <PropertyRef Name="OrderID" />
+      </Principal>
+      <Dependent Role="OrderProductLineTable">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderTable_CustomerTable">
+    <End Role="CustomerTable" Type="Self.CustomerTable" Multiplicity="1" />
+    <End Role="OrderTable" Type="Self.OrderTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerTable">
+        <PropertyRef Name="CustomerID" />
+      </Principal>
+      <Dependent Role="OrderTable">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductTable_CatagoryTable">
+    <End Role="CatagoryTable" Type="Self.CatagoryTable" Multiplicity="0..1" />
+    <End Role="ProductTable" Type="Self.ProductTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CatagoryTable">
+        <PropertyRef Name="CatagoryID" />
+      </Principal>
+      <Dependent Role="ProductTable">
+        <PropertyRef Name="CatagoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="StoreContainer">
+    <EntitySet Name="AddressTable" EntityType="Self.AddressTable" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CartTable" EntityType="Self.CartTable" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CatagoryTable" EntityType="Self.CatagoryTable" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CustomerTable" EntityType="Self.CustomerTable" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderProductLineTable" EntityType="Self.OrderProductLineTable" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderTable" EntityType="Self.OrderTable" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductTable" EntityType="Self.ProductTable" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserTable" EntityType="Self.UserTable" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_A_AddressTable" Association="Self.FK_A_AddressTable">
+      <End Role="CustomerTable" EntitySet="CustomerTable" />
+      <End Role="AddressTable" EntitySet="AddressTable" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CartTable_ToCustomerTable" Association="Self.FK_CartTable_ToCustomerTable">
+      <End Role="CustomerTable" EntitySet="CustomerTable" />
+      <End Role="CartTable" EntitySet="CartTable" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CartTable_ToProductTable" Association="Self.FK_CartTable_ToProductTable">
+      <End Role="ProductTable" EntitySet="ProductTable" />
+      <End Role="CartTable" EntitySet="CartTable" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerTable_UserTable" Association="Self.FK_CustomerTable_UserTable">
+      <End Role="UserTable" EntitySet="UserTable" />
+      <End Role="CustomerTable" EntitySet="CustomerTable" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderProductLineTable_ProductTable" Association="Self.FK_OrderProductLineTable_ProductTable">
+      <End Role="ProductTable" EntitySet="ProductTable" />
+      <End Role="OrderProductLineTable" EntitySet="OrderProductLineTable" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderProductLineTable_ToOrderTable" Association="Self.FK_OrderProductLineTable_ToOrderTable">
+      <End Role="OrderTable" EntitySet="OrderTable" />
+      <End Role="OrderProductLineTable" EntitySet="OrderProductLineTable" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderTable_CustomerTable" Association="Self.FK_OrderTable_CustomerTable">
+      <End Role="CustomerTable" EntitySet="CustomerTable" />
+      <End Role="OrderTable" EntitySet="OrderTable" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductTable_CatagoryTable" Association="Self.FK_ProductTable_CatagoryTable">
+      <End Role="CatagoryTable" EntitySet="CatagoryTable" />
+      <End Role="ProductTable" EntitySet="ProductTable" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

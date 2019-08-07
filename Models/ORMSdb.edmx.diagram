@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="04e3e8bdfab44f97910c701a11c4ab84" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="ORMSITRONDbModel.AddressTable" Width="1.5" PointX="5.25" PointY="7.75" />
+        <EntityTypeShape EntityType="ORMSITRONDbModel.CartTable" Width="1.5" PointX="5.25" PointY="4.25" />
+        <EntityTypeShape EntityType="ORMSITRONDbModel.CatagoryTable" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="ORMSITRONDbModel.CustomerTable" Width="1.5" PointX="3" PointY="5.5" />
+        <EntityTypeShape EntityType="ORMSITRONDbModel.OrderProductLineTable" Width="1.5" PointX="7.5" PointY="10.5" />
+        <EntityTypeShape EntityType="ORMSITRONDbModel.OrderTable" Width="1.5" PointX="5.25" PointY="11" />
+        <EntityTypeShape EntityType="ORMSITRONDbModel.ProductTable" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="ORMSITRONDbModel.UserTable" Width="1.5" PointX="0.75" PointY="6.375" />
+        <AssociationConnector Association="ORMSITRONDbModel.FK_A_AddressTable" />
+        <AssociationConnector Association="ORMSITRONDbModel.FK_CartTable_ToCustomerTable" />
+        <AssociationConnector Association="ORMSITRONDbModel.FK_CartTable_ToProductTable" />
+        <AssociationConnector Association="ORMSITRONDbModel.FK_ProductTable_CatagoryTable" />
+        <AssociationConnector Association="ORMSITRONDbModel.FK_CustomerTable_UserTable" />
+        <AssociationConnector Association="ORMSITRONDbModel.FK_OrderTable_CustomerTable" />
+        <AssociationConnector Association="ORMSITRONDbModel.FK_OrderProductLineTable_ProductTable" />
+        <AssociationConnector Association="ORMSITRONDbModel.FK_OrderProductLineTable_ToOrderTable" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
